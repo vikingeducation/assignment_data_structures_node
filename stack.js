@@ -53,6 +53,9 @@ assert(removed === 3);
 let test3 = new Stack([]);
 assert(test3.isEmpty() === true);
 
+let test4 = new Stack([1]);
+assert(test4.isEmpty() === false);
+
 let testString = "Hello world!";
 let reversingStack = new Stack([]);
 for (let i = 0; i < testString.length; i++) {
