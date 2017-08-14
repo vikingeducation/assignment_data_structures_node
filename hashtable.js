@@ -1,3 +1,4 @@
+const assert = require('assert');
 const UNICODE_ALPHA_START = 97;
 
 class Node {
@@ -60,6 +61,20 @@ class LinkedList {
     return currentNode;
   }
 
+  findWord(word) {
+    let currentNode = this.headNode;
+
+    while (currentNode !== null) {
+      if (currentNode.data.name === word) {
+        return currentNode.data;
+      }
+      
+      currentNode = currentNode.next;
+    }
+
+    return null;
+  }
+
   printList() {
     let currentNode = this.headNode;
 
@@ -83,7 +98,7 @@ class HashTable {
   }
 
   insert(data) {
-    let index = this.hashKey(data);
+    let index = this.hashKey(data.name);
     let bucket = this.buckets[index]
 
     if (bucket) {
@@ -103,12 +118,25 @@ class HashTable {
       }
     }
   }
+
+  define(word) {
+    let index = this.hashKey(word);
+    let bucket = this.buckets[index];
+    let foundWord = bucket.findWord(word);
+    if (foundWord) {
+      return foundWord.definition;
+    }
+
+    return "Definition not found";
+  }
 }
 
 let test1 = new HashTable();
-test1.insert("apple");
-test1.insert("aardvark");
-test1.insert("chocolate");
-test1.insert("zoobat");
-test1.insert("zygote");
+test1.insert({name: "apple", definition: "a fruit"});
+test1.insert({name: "aadvark", definition: "animal"});
+test1.insert({name: "chocolate", definition: "something delicious"});
+test1.insert({name: "zoobat", definition: "a pokemon"});
+test1.insert({name: "zygote", definition: "like an egg"});
 test1.renderList();
+
+assert(test1.define("apple") === "a fruit");
