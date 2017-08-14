@@ -1,0 +1,36 @@
+{
+  "data": [
+    {
+      "name": "cat",
+      "definition": "The definition of cat is cat"
+    },
+    {
+      "name": "cabbage",
+      "definition": "The definition of cabbage is cabbage"
+    },
+    {
+      "name": "cart",
+      "definition": "The definition of cart is cart"
+    },
+    {
+      "name": "card",
+      "definition": "The definition of card is card"
+    },
+    {
+      "name": "abacus",
+      "definition": "The definition of abacus is abacus"
+    },
+    {
+      "name": "algebra",
+      "definition": "The definition of algebra is algebra"
+    },
+    {
+      "name": "argument",
+      "definition": "The definition of argument is argument"
+    },
+    {
+      "name": "soporific",
+      "definition": "The definition of soporific is soporific"
+    }
+  ]
+}
