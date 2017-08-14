@@ -1,4 +1,6 @@
 const assert = require('assert');
+const fs = require('fs');
+
 const UNICODE_ALPHA_START = 97;
 
 class Node {
@@ -63,12 +65,14 @@ class LinkedList {
 
   findWord(word) {
     let currentNode = this.headNode;
+    let counter = 1;
 
     while (currentNode !== null) {
       if (currentNode.data.name === word) {
-        return currentNode.data;
+        return {data: currentNode.data, counter};
       }
       
+      counter++;
       currentNode = currentNode.next;
     }
 
@@ -119,15 +123,28 @@ class HashTable {
     }
   }
 
+  stringifyBuckets() {
+    console.log(JSON.stringify(this.buckets, null, 2));
+  }
+
   define(word) {
     let index = this.hashKey(word);
     let bucket = this.buckets[index];
-    let foundWord = bucket.findWord(word);
-    if (foundWord) {
-      return foundWord.definition;
+
+    if (!bucket) {
+      console.log(`Definition not found for ${word}`);
+      return;
     }
 
-    return "Definition not found";
+    let foundWord = bucket.findWord(word);
+    if (foundWord) {
+      console.log(`Found in ${foundWord.counter} step(s)`);
+      return foundWord.data.definition;
+    } else {
+      console.log(`Definition not found for ${word}`);
+    }
+
+    return `Definition not found for ${word}`;
   }
 }
 
@@ -139,4 +156,15 @@ test1.insert({name: "zoobat", definition: "a pokemon"});
 test1.insert({name: "zygote", definition: "like an egg"});
 test1.renderList();
 
+test1.define("eschatology");
 assert(test1.define("apple") === "a fruit");
+assert(test1.define("zygote") === "like an egg");
+
+let dictionaryTable = new HashTable();
+const dictionary = JSON.parse(fs.readFileSync('dictionary.json', 'utf8'));
+for (let i = 0; i < dictionary.data.length; i++) {
+  dictionaryTable.insert(dictionary.data[i]);
+}
+
+dictionaryTable.renderList();
+assert(dictionaryTable.define("cabbage") === "The definition of cabbage is cabbage");
