@@ -1,25 +1,18 @@
 class Stack {
   constructor() {
     this.stack = [];
+    this.length = 0;
   }
   push(n) {
-    let newStack = [n];
-    for (let i = 0; i < this.stack.length; i++) {
-      newStack[i + 1] = this.stack[i];
-    }
-    this.stack = newStack;
+    this.stack[this.length] = n;
+    this.length += 1;
   }
   pop() {
-    const popped = this.stack[0];
-    let newStack = [];
-    for (let i = 1; i < this.stack.length; i++) {
-      newStack[i - 1] = this.stack[i];
-    }
-    this.stack = newStack;
-    return popped;
+    this.length -= 1;
+    return this.stack[this.length];
   }
   empty() {
-    return !this.stack.length;
+    return !this.length;
   }
 }
 
