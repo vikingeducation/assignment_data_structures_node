@@ -14,6 +14,9 @@ class Stack {
   empty() {
     return !this.length;
   }
+  peek() {
+    return this.stack[this.length - 1];
+  }
 }
 
 module.exports = Stack;
