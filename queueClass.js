@@ -1,29 +1,25 @@
-// Create a Queue class which implements the methods enqueue, dequeue and peek.
-// Add methods for empty
-// Verify that you can load and unload a string in the same order with your queue.
-
 class Queue {
   constructor() {
     this.queue = [];
 
-    this.enqueue = (item) => {
+    this.enqueue = item => {
       let newQ = [item];
-      for (let i=0; i<this.queue.length; i++) {
-        newQ[i+1] = this.queue[i]
+      for (let i = 0; i < this.queue.length; i++) {
+        newQ[i + 1] = this.queue[i];
       }
-      this.queue = newQ
+      this.queue = newQ;
     };
 
     this.dequeue = () => {
       let i = 0;
       let result = [];
-      let popped = this.queue[this.queue.length - 1]
+      let popped = this.queue[this.queue.length - 1];
       while (this.queue.length - 1 > i) {
         result[i] = this.queue[i];
         i++;
       }
       this.queue = result;
-      return popped
+      return popped;
     };
 
     this.peek = () => {
@@ -35,3 +31,33 @@ class Queue {
     };
   }
 }
+
+const loadAndUnloadStringWithQueue = string => {
+  console.log("recieved ", string);
+  const strArr = string.split("");
+  const myQueue = new Queue();
+  let enqueueing = "enqueueing..";
+  for (let i = 0; i < strArr.length; i++) {
+    console.log("we peeked and saw:", myQueue.peek());
+    myQueue.enqueue(strArr[i]);
+    enqueueing = enqueueing.split("");
+    enqueueing.push(".");
+    enqueueing = enqueueing.join("");
+    console.log(enqueueing);
+  }
+  let newArr = [];
+  let dequeueing = "dequeueing..";
+  for (let i = 0; i < strArr.length; i++) {
+    console.log("we peeked and saw:", myQueue.peek());
+    newArr[i] = myQueue.dequeue();
+    dequeueing = dequeueing.split("");
+    dequeueing.push(".");
+    dequeueing = dequeueing.join("");
+    console.log(dequeueing);
+  }
+  let newStr = newArr.join("");
+  return newStr;
+};
+
+const result = loadAndUnloadStringWithQueue("Hello");
+console.log(result);
