@@ -22,6 +22,15 @@ describe("The Stack class", () => {
     expect(stack.empty()).toBeFalsy();
   });
 
+  it("allows you to peek at the top item", () => {
+    stack.push(42);
+
+    expect(stack.peek()).toEqual(42);
+    stack.push("the answer");
+
+    expect(stack.peek()).toEqual("the answer");
+  });
+
   it("Can be used to reverse a string", () => {
     "this is a string".split("").forEach(c => stack.push(c));
     let result = "";
