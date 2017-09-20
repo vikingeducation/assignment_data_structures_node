@@ -1,25 +1,38 @@
-class Stack {
+const Stack = class {
   constructor() {
-    const storage = [];
+    this.storage = [];
   }
-}
-
-const Stack = () => {
-  const storage = [];
-  this.pop = () => {
+  pop() {
     return;
-  };
-  this.push = () => {
+  }
+  push() {
     return;
-  };
-  this.peek = () => {
+  }
+  peek() {
     return;
-  };
-  this.isEmpty = () => {
-    if (storage.length === 0) return true;
+  }
+  isEmpty() {
+    if (this.storage.length === 0) return true;
     return false;
-  };
+  }
 };
+
+// const Stack = () => {
+//   const storage = [];
+//   this.pop = () => {
+//     return;
+//   };
+//   this.push = () => {
+//     return;
+//   };
+//   this.peek = () => {
+//     return;
+//   };
+//   this.isEmpty = () => {
+//     if (storage.length === 0) return true;
+//     return false;
+//   };
+// };
 
 const ourStack = new Stack();
 
