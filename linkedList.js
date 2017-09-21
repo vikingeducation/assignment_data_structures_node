@@ -1,6 +1,7 @@
 class Node {
-  constructor(data, next) {
-    this.data = data;
+  constructor(word, definition, next) {
+    this.word = word;
+    this.definition = definition;
     this.next = next;
   }
 }
@@ -10,8 +11,8 @@ class LinkedList {
     this.head;
     this.tail;
   }
-  add(data) {
-    const newNode = new Node(data, this.head);
+  add(word, definition) {
+    const newNode = new Node(word, definition, this.head);
     this.tail = this.tail ? this.tail : newNode;
     this.head = newNode;
   }
@@ -22,16 +23,16 @@ class LinkedList {
       current = current.next;
       i++;
     }
-    return i === index ? current.data : undefined;
+    return i === index ? current : undefined;
   }
   print() {
     let current = this.head;
     while (current) {
-      console.log(current.data);
+      console.log(current.word);
       current = current.next;
     }
   }
-  insert(data, index) {
+  insert(word, definition, index) {
     let current = this.head;
     let i = 0;
     while (i < index - 1 && current.next) {
@@ -39,7 +40,7 @@ class LinkedList {
       i++;
     }
     if (i === index - 1) {
-      const newNode = new Node(data, current.next);
+      const newNode = new Node(word, definition, current.next);
       current.next = newNode;
     }
   }
@@ -52,8 +53,8 @@ class LinkedList {
     }
     return current ? length : 0;
   }
-  append(data) {
-    const newNode = new Node(data);
+  append(word, definition) {
+    const newNode = new Node(word, definition);
     this.tail.next = newNode;
     this.tail = newNode;
   }
@@ -74,7 +75,7 @@ class LinkedList {
   remove(index) {
     let current = this.head;
     let i = 0;
-    while (i < index - 1 && curent.next) {
+    while (i < index - 1 && current.next) {
       current = current.next;
       i++;
     }
