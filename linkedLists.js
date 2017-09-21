@@ -54,6 +54,10 @@ class LinkedList {
     this.tail = this.head;
     this.logging = logging;
     this._length = 1;
+    this.steps = 0;
+  }
+  stepsOfLastOperation() {
+    return this.steps;
   }
   length() {
     return this._length;
@@ -63,11 +67,13 @@ class LinkedList {
     console.log("=============finding=============");
     let current = this.head;
     let position = 0;
+    this.steps = 0;
     while (current && position !== index) {
       this.log(`${position}:`);
       this.log(current.data);
       current = current.next;
       position++;
+      this.steps++;
     }
     if (position === index) {
       this.log("found it!");
@@ -82,10 +88,12 @@ class LinkedList {
   findWord(word) {
     console.log("=============finding=============");
     let current = this.head;
+    this.steps = 0;
     while (current && current.data.word !== word) {
       // this.log(`${position}:`);
       this.log(current.data);
       current = current.next;
+      this.steps++;
     }
     //check for nulls first
     if (!current) {
@@ -102,10 +110,12 @@ class LinkedList {
     this.log("=============crawling=============");
     let current = this.head;
     let length = 0;
+    this.steps = 0;
     while (current) {
       console.log("" + current.data);
       current = current.next;
       length++;
+      this.steps++;
     }
     this.log(`length = ${length}`);
   }
@@ -113,15 +123,18 @@ class LinkedList {
     this.log("============= Stringifying =============");
     let current = this.head;
     let string = "";
+    this.steps = 0;
     while (current) {
       string += " -> " + current;
       current = current.next;
+      this.steps = 0;
     }
     return string;
   }
   //O(n), swapping in place
   reverse() {
     this.log("=============reversing=============");
+    this.steps = 0;
     //save next
     let next = this.head.next;
     //point head to null
@@ -143,18 +156,23 @@ class LinkedList {
       next = current.next;
       //point this node backward
       current.next = previous;
+      this.steps++;
     }
   }
   //O(1) or O(n)
   insert(data, index = null) {
     this.log(`=============inserting=============`);
+    this.steps = 0;
+    let totalSteps = 0;
     if (index === null) {
       const prevTail = this.tail;
       this.tail = new Node(data, null);
       prevTail.next = this.tail;
     } else {
       let before = this.findI(index - 1);
+      totalSteps += this.steps;
       let after = this.findI(index);
+      totalSteps += this.steps;
       // this.log(
       //   `index to insert at ${index}\n found ${before.data.word} at ${index -
       //     1}\n found ${after.data.word} at ${index}`
@@ -164,6 +182,7 @@ class LinkedList {
       node.next = after;
     }
     this._length++;
+    this.steps = totalSteps;
   }
   //cleanest way I could think of for allowing a simple flag to turn off all console.logs
   //comment this.logs out later for max-speed
@@ -189,6 +208,6 @@ const testing = () => {
   list.crawl();
   console.log(list.length());
 };
-testing();
+// testing();
 module.exports = LinkedList;
 ////
