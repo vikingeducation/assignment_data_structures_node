@@ -18,12 +18,12 @@ class Hash {
     this.buckets[wordHash].add(word, definition);
   }
 
-  define(word) {
+  define(word, logger = () => null) {
     const wordHash = this.hash(word);
     let node = this.buckets[wordHash].head;
-    while (node.next && node.word !== word) {
-      node = node.next;
-    }
+    let steps = 1;
+    while (node.next && node.word !== word && ++steps) node = node.next;
+    logger(`Steps: ${steps}`);
     return node.word === word ? node.definition : null;
   }
 

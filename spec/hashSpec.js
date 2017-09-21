@@ -44,4 +44,17 @@ describe("The Hash class", () => {
 
     expect(logger).toHaveBeenCalledWith("frog: an Ape\nfoo: bar\n");
   });
+
+  it("logs the number of linked list nodes traversed when defining", () => {
+    hash.insert("apple", "bar");
+    hash.insert("frog", "an Ape");
+    hash.insert("fiesta", "a party");
+    hash.insert("frankenstein", "a mad scientist");
+
+    hash.define("frog", logger);
+    hash.define("fiesta", logger);
+
+    expect(logger).toHaveBeenCalledWith("Steps: 3");
+    expect(logger).toHaveBeenCalledWith("Steps: 2");
+  });
 });
