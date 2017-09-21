@@ -4,6 +4,10 @@ class Node {
     this.definition = definition;
     this.next = next;
   }
+
+  toString() {
+    return `${this.word}: ${this.definition}`;
+  }
 }
 
 class LinkedList {
