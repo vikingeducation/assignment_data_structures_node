@@ -13,6 +13,10 @@ function LinkedListNode(word, def) {
 	};
 }
 
+LinkedListNode.prototype.toString = function() {
+	return `Word: ${this.word}, Def: ${this.def}`;
+};
+
 class LinkedList {
 	constructor(arr) {
 		this.head = this.end = null;
