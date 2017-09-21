@@ -1,6 +1,12 @@
 //HASH TABLE
 const LinkedList = require("./linkedLists");
-
+function DictionaryEntry(word, definition) {
+  this.word = word;
+  this.definition = definition;
+}
+DictionaryEntry.prototype.toString = function() {
+  return `${this.word}: ${this.definition}`;
+};
 // class hashTable {
 //   constructor() {
 //     this.buckets = [];
@@ -25,9 +31,14 @@ function HashTable(dictionaryFile) {
     // buckets[hash(word)].insert(word, definition);
     const index = hash(word);
     if (buckets[index]) {
-      buckets[index].insert(word.toLowerCase(), definition);
+      buckets[index].insert(
+        new DictionaryEntry(word.toLowerCase(), definition)
+      );
     } else {
-      buckets[index] = new LinkedList(word, definition, false);
+      buckets[index] = new LinkedList(
+        new DictionaryEntry(word, definition),
+        false
+      );
     }
   };
   const renderList = () => {
@@ -35,7 +46,8 @@ function HashTable(dictionaryFile) {
     buckets.forEach((bucket, index) => {
       console.log(`bucket index: ${index}:`);
       if (bucket) {
-        bucket.crawl();
+        // bucket.crawl();
+        console.log("bucket " + bucket);
       } else {
         console.log(bucket);
       }
@@ -60,6 +72,7 @@ function HashTable(dictionaryFile) {
   };
   const loadDictionary = () => {
     //if dictionaryFile is .json
+    if (!dictionaryFile) return;
     const dictionary = require(dictionaryFile);
     for (word in dictionary) {
       insert(word, dictionary[word]);
@@ -79,8 +92,10 @@ const testing = () => {
   const hash = new HashTable("./dictionary.json");
   // const hash = new HashTable("/usr/share/dict/words");
   // console.log(hash.hash("athing"));
+  // const hash = new HashTable();
   // hash.insert("awesome", "coffee");
-  // hash.renderList();
+  // hash.insert("amazing", "things");
+  hash.renderList();
   hash.define("awesome");
   hash.define("cat");
   hash.define("bear");

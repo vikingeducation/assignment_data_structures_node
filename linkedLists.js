@@ -109,6 +109,16 @@ class LinkedList {
     }
     this.log(`length = ${length}`);
   }
+  toString() {
+    this.log("============= Stringifying =============");
+    let current = this.head;
+    let string = "";
+    while (current) {
+      string += " -> " + current;
+      current = current.next;
+    }
+    return string;
+  }
   //O(n), swapping in place
   reverse() {
     this.log("=============reversing=============");
@@ -145,10 +155,10 @@ class LinkedList {
     } else {
       let before = this.findI(index - 1);
       let after = this.findI(index);
-      this.log(
-        `index to insert at ${index}\n found ${before.data.word} at ${index -
-          1}\n found ${after.data.word} at ${index}`
-      );
+      // this.log(
+      //   `index to insert at ${index}\n found ${before.data.word} at ${index -
+      //     1}\n found ${after.data.word} at ${index}`
+      // );
       let node = new Node(data, null);
       before.next = node;
       node.next = after;
