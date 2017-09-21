@@ -8,7 +8,7 @@ DictionaryEntry.prototype.toString = function() {
   return `${this.word}: ${this.definition}`;
 };
 
-function HashTable(dictionaryFile, numBuckets = 26) {
+function HashTable(dictionaryFile, numBuckets = 26, wordCount) {
   //STARTUP
   let buckets = Array(numBuckets).fill(null);
 
@@ -114,22 +114,42 @@ function HashTable(dictionaryFile, numBuckets = 26) {
       return console.log(`${word}: ${definition}`);
     }
   };
+
   const loadDictionary = () => {
     //if dictionaryFile is .json
     if (!dictionaryFile) return;
-    const dictionary = require(dictionaryFile);
-    for (word in dictionary) {
-      insert(word, dictionary[word]);
+    //if provided with an explicit desired wordCount, do some rand'ing
+    if (wordCount) {
+      const dictionarySize = 86036; //magic value
+      const chance = wordCount / dictionarySize;
+      const dictionary = require(dictionaryFile);
+      for (word in dictionary) {
+        if (Math.random() < chance) insert(word, dictionary[word]);
+      }
+    } else {
+      //else grab all the words
+      const dictionary = require(dictionaryFile);
+      for (word in dictionary) {
+        insert(word, dictionary[word]);
+      }
     }
+
     //else use fs module
   };
   loadDictionary();
+  const totalWords = () => {
+    return buckets.reduce((sum, bucket) => {
+      if (bucket) return sum + bucket.length();
+      return sum;
+    }, 0);
+  };
   return {
     hash,
     insert,
     renderList,
     renderLengths,
-    define
+    define,
+    totalWords
   };
 }
 
@@ -146,7 +166,7 @@ const simpleTest = () => {
 };
 
 const testing = () => {
-  const hash = new HashTable("./dictionary.json", 200);
+  const hash = new HashTable("./dictionaries/dictionary.json", 26, 1000);
   // const hash = new HashTable("/usr/share/dict/words");
   // const hash = new HashTable();
   // hash.insert("awesome", "coffee");
@@ -157,5 +177,6 @@ const testing = () => {
   hash.define("cat");
   hash.define("bear");
   hash.define("recursion");
+  console.log("word count = ", hash.totalWords());
 };
 testing();
