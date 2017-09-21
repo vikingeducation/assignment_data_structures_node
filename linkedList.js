@@ -28,7 +28,7 @@ class LinkedList {
   print() {
     let current = this.head;
     while (current) {
-      console.log(current.word);
+      console.log(current.word, ": ", current.definition);
       current = current.next;
     }
   }
