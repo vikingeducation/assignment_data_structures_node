@@ -18,6 +18,18 @@ In a comment above the method, explain how quickly it runs in Big O notation. Is
 // data = {
 //   [word]: definition
 // }
+function DictionaryEntry(word, definition) {
+  // return { word, definition };
+  this.word = word;
+  this.definition = definition;
+}
+DictionaryEntry.prototype.toString = function() {
+  return `${this.word}: ${this.definition}`;
+};
+// const entry = new DictionaryEntry("cat", "meme");
+// console.log("entry = ", entry);
+// console.log("" + entry);
+
 class Node {
   constructor(data, next) {
     this.data = data;
@@ -29,13 +41,22 @@ class Node {
   getTheGoods() {
     return this.data;
   }
+  toString() {
+    return `${this.data.toString()}`;
+  }
 }
 
 class LinkedList {
-  constructor(word, definition, logging = false) {
-    this.head = new Node({ word, definition }, null);
+  //TODO: generalize this
+  constructor(data, logging = false) {
+    this.head = new Node(data, null);
+    // this.head = new Node({ word, definition }, null);
     this.tail = this.head;
     this.logging = logging;
+    this._length = 1;
+  }
+  length() {
+    return this._length;
   }
   //O(n)
   findI(index) {
@@ -62,7 +83,7 @@ class LinkedList {
     console.log("=============finding=============");
     let current = this.head;
     while (current && current.data.word !== word) {
-      this.log(`${position}:`);
+      // this.log(`${position}:`);
       this.log(current.data);
       current = current.next;
     }
@@ -72,7 +93,7 @@ class LinkedList {
       return null;
     } else {
       this.log("found it!");
-      this.log(current.data);
+      this.log(current + "");
       return current;
     }
   }
@@ -82,7 +103,7 @@ class LinkedList {
     let current = this.head;
     let length = 0;
     while (current) {
-      console.log(current.data);
+      console.log("" + current.data);
       current = current.next;
       length++;
     }
@@ -115,11 +136,11 @@ class LinkedList {
     }
   }
   //O(1) or O(n)
-  insert(word, definition, index = null) {
+  insert(data, index = null) {
     this.log(`=============inserting=============`);
     if (index === null) {
       const prevTail = this.tail;
-      this.tail = new Node({ word, definition }, null);
+      this.tail = new Node(data, null);
       prevTail.next = this.tail;
     } else {
       let before = this.findI(index - 1);
@@ -128,12 +149,14 @@ class LinkedList {
         `index to insert at ${index}\n found ${before.data.word} at ${index -
           1}\n found ${after.data.word} at ${index}`
       );
-      let node = new Node({ word, definition }, null);
+      let node = new Node(data, null);
       before.next = node;
       node.next = after;
     }
+    this._length++;
   }
   //cleanest way I could think of for allowing a simple flag to turn off all console.logs
+  //comment this.logs out later for max-speed
   log(stuff) {
     if (this.logging) {
       console.log(stuff);
@@ -141,17 +164,21 @@ class LinkedList {
   }
 }
 const testing = () => {
-  const list = new LinkedList("cat", "meme generator", true);
+  const list = new LinkedList(
+    new DictionaryEntry("cat", "meme generator"),
+    true
+  );
   list.crawl();
-  list.insert("dog", "frisbee finder", null);
-  list.insert("linked list", "The bees knees", null);
+  list.insert(new DictionaryEntry("dog", "frisbee finder"), null);
+  list.insert(new DictionaryEntry("linked list", "The bees knees"), null);
   list.crawl();
   list.findI(1);
-  list.insert("hash table", "magic", 1);
+  list.insert(new DictionaryEntry("hash table", "magic"), 1);
   list.crawl();
   list.reverse();
   list.crawl();
+  console.log(list.length());
 };
-// testing()
+testing();
 module.exports = LinkedList;
 ////

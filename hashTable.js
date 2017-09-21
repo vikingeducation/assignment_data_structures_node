@@ -6,24 +6,28 @@ const LinkedList = require("./linkedLists");
 //     this.buckets = [];
 //   }
 // }
-function HashTable() {
+function HashTable(dictionaryFile) {
   // let buckets = Array(26)
   //   .fill(true)
   //   .map(empty => new LinkedList());
+  //STARTUP
   let buckets = Array(26).fill(null);
   // console.log(buckets);
+
+  //HASH FUNCTION
   const hash = word => {
     // console.log(word.toLowerCase().charCodeAt(0));
     return word.toLowerCase().charCodeAt(0) - 97;
   };
+
   //consider inserting them in alphabetical order
   const insert = (word = "cat", definition = "zzz") => {
     // buckets[hash(word)].insert(word, definition);
     const index = hash(word);
     if (buckets[index]) {
-      buckets[index].insert(word, definition);
+      buckets[index].insert(word.toLowerCase(), definition);
     } else {
-      buckets[index] = new LinkedList(word, definition, true);
+      buckets[index] = new LinkedList(word, definition, false);
     }
   };
   const renderList = () => {
@@ -54,6 +58,15 @@ function HashTable() {
       return console.log(`${word}: ${definition}`);
     }
   };
+  const loadDictionary = () => {
+    //if dictionaryFile is .json
+    const dictionary = require(dictionaryFile);
+    for (word in dictionary) {
+      insert(word, dictionary[word]);
+    }
+    //else use fs module
+  };
+  loadDictionary();
   return {
     hash,
     insert,
@@ -63,10 +76,14 @@ function HashTable() {
 }
 
 const testing = () => {
-  const hash = new HashTable();
-  console.log(hash.hash("athing"));
-  hash.insert("awesome", "coffee");
-  hash.renderList();
+  const hash = new HashTable("./dictionary.json");
+  // const hash = new HashTable("/usr/share/dict/words");
+  // console.log(hash.hash("athing"));
+  // hash.insert("awesome", "coffee");
+  // hash.renderList();
   hash.define("awesome");
+  hash.define("cat");
+  hash.define("bear");
+  hash.define("recursion");
 };
 testing();
