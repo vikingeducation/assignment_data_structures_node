@@ -2,8 +2,8 @@ const LinkedList = require("./linkedList");
 
 class Hash {
   constructor(entries) {
-    this.numBuckets = 26;
-    this.buckets = new Array(26);
+    this.numBuckets = 30000;
+    this.buckets = new Array(30000);
     this.prime = 1000000000003;
     this.seed = 199079922168;
     if (entries) {
@@ -21,12 +21,33 @@ class Hash {
     return (charSum % this.prime) % this.numBuckets;
   }
 
+  redistribute() {
+    console.log("Redistributing..............................................");
+    this.numBuckets *= 2;
+    this.buckets = this.buckets.reduce((newBuckets, bucket) => {
+      let node = bucket.head;
+      while (node) {
+        const wordHash = this.hash(node.word);
+        // console.log(wordHash);
+        if (!newBuckets[wordHash]) {
+          newBuckets[wordHash] = new LinkedList();
+        }
+        newBuckets[wordHash].add(node.word, node.definition);
+        node = node.next;
+      }
+      return newBuckets;
+    }, new Array(this.numBuckets));
+    console.log("Finished******************");
+  }
+
   insert(word, definition) {
     const wordHash = this.hash(word);
     if (!this.buckets[wordHash]) {
       this.buckets[wordHash] = new LinkedList();
     }
     this.buckets[wordHash].add(word, definition);
+
+    if (this.buckets[wordHash].length > 50) this.redistribute();
   }
 
   define(word, logger = () => null) {
@@ -46,9 +67,7 @@ class Hash {
   }
 
   displayLength() {
-    return this.buckets.map(
-      (bucket, number) => `${number}: ${bucket.length()}`
-    );
+    return this.buckets.map((bucket, number) => `${number}: ${bucket.length}`);
   }
 }
 

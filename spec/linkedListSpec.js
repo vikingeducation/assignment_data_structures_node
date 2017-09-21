@@ -26,11 +26,11 @@ describe("The LinkedList class", () => {
   });
 
   it("can tell you how many nodes it contains", () => {
-    expect(ll.length()).toEqual(3);
+    expect(ll.length).toEqual(3);
   });
 
   it("can append a node to the end", () => {
-    const index = ll.length();
+    const index = ll.length;
     ll.append("carrot", "a long, usually orange, root vegetable");
     const node = ll.find(index);
 

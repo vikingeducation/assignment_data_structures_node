@@ -14,11 +14,13 @@ class LinkedList {
   constructor() {
     this.head;
     this.tail;
+    this.length = 0;
   }
   add(word, definition) {
     const newNode = new Node(word, definition, this.head);
     this.tail = this.tail ? this.tail : newNode;
     this.head = newNode;
+    this.length++;
   }
   find(index) {
     let current = this.head;
@@ -47,20 +49,13 @@ class LinkedList {
       const newNode = new Node(word, definition, current.next);
       current.next = newNode;
     }
-  }
-  length() {
-    let current = this.head;
-    let length = 1;
-    while (current.next) {
-      current = current.next;
-      length += 1;
-    }
-    return current ? length : 0;
+    this.length++;
   }
   append(word, definition) {
     const newNode = new Node(word, definition);
     this.tail.next = newNode;
     this.tail = newNode;
+    this.length++;
   }
   reverse() {
     this.tail = this.head;
@@ -86,6 +81,7 @@ class LinkedList {
     if (i === index - 1) {
       current.next = current.next.next;
     }
+    this.length--;
   }
   toString() {
     let str = "",
