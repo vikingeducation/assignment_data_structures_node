@@ -58,12 +58,30 @@ class LinkedList {
     }
   }
   //O(n)
+  findWord(word) {
+    console.log("=============finding=============");
+    let current = this.head;
+    while (current && current.data.word !== word) {
+      this.log(`${position}:`);
+      this.log(current.data);
+      current = current.next;
+    }
+    //check for nulls first
+    if (!current) {
+      this.log("couldnt find it :(");
+      return null;
+    } else {
+      this.log("found it!");
+      this.log(current.data);
+      return current;
+    }
+  }
+  //O(n)
   crawl() {
     this.log("=============crawling=============");
     let current = this.head;
     let length = 0;
     while (current) {
-      console.log(`${length}:`);
       console.log(current.data);
       current = current.next;
       length++;
@@ -122,16 +140,18 @@ class LinkedList {
     }
   }
 }
-
-const list = new LinkedList("cat", "meme generator", true);
-list.crawl();
-list.insert("dog", "frisbee finder", null);
-list.insert("linked list", "The bees knees", null);
-list.crawl();
-list.findI(1);
-list.insert("hash table", "magic", 1);
-list.crawl();
-list.reverse();
-list.crawl();
-
+const testing = () => {
+  const list = new LinkedList("cat", "meme generator", true);
+  list.crawl();
+  list.insert("dog", "frisbee finder", null);
+  list.insert("linked list", "The bees knees", null);
+  list.crawl();
+  list.findI(1);
+  list.insert("hash table", "magic", 1);
+  list.crawl();
+  list.reverse();
+  list.crawl();
+};
+// testing()
+module.exports = LinkedList;
 ////
