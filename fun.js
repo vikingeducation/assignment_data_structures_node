@@ -1,21 +1,12 @@
 binary = (n, num = 1, acc = []) => {
-  let bin = num.toString(2);
-  if (bin.length > n) return acc;
-  while (bin.length < n) {
-    num++;
-    bin = num.toString(2);
-  }
-
-  let right = bin.slice(Math.floor(n / 2));
-  let left = bin.slice(0, Math.floor(n / 2 + n % 2));
-
-  const sumDig = num => {
-    return +num < 10 ? +num : num % 10 + sumDig(Math.floor(num / 10));
-  };
-
-  if (sumDig(left) === sumDig(right)) acc.push(bin);
-
+  if (num.toString(2).length > n) return acc;
+  while (num.toString(2).length < n) num++;
+  const right = num.toString(2).slice(Math.floor(n / 2));
+  const left = num.toString(2).slice(0, Math.floor(n / 2 + n % 2));
+  const sumDig = num =>
+    num < 10 ? +num : num % 10 + sumDig(Math.floor(num / 10));
+  if (sumDig(left) === sumDig(right)) acc.push(num.toString(2));
   return binary(n, ++num, acc);
 };
 
-console.log(binary(5));
+binary(5);
