@@ -1,10 +1,7 @@
 const LinkedList = require("./linkedList");
 
 const PRIME = 4300000013;
-const INT_PRIME = 4300000037;
 const SEED = 560;
-const INT_SEED_A = 596;
-const INT_SEED_B = 910;
 const REDISTRIBUTE_THRESHOLD = 50;
 
 class Hash {
@@ -24,13 +21,11 @@ class Hash {
       return sum + char.charCodeAt(0) * SEED ** i;
     }, 0);
 
-    return (
-      ((INT_SEED_A * (charSum % PRIME) * INT_SEED_B) % INT_PRIME) %
-      this.numBuckets
-    );
+    return (charSum % PRIME) % this.numBuckets;
   }
 
   redistribute() {
+    // console.log("Redistributing: ", this.insertions);
     this.numBuckets *= 2;
     this.buckets = this.buckets.reduce((newBuckets, bucket) => {
       let node = bucket.head;
