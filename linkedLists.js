@@ -105,6 +105,23 @@ class LinkedList {
       return current;
     }
   }
+  //generator for walking through the list
+  *listGen() {
+    let current = this.head;
+    while (current) {
+      yield current.data;
+      current = current.next;
+    }
+    return;
+  }
+  crawlGen() {
+    let iter = this.listGen();
+    let result;
+    do {
+      result = iter.next();
+      console.log(result.value);
+    } while (!result.done);
+  }
   //O(n)
   crawl() {
     this.log("=============crawling=============");
@@ -197,17 +214,18 @@ const testing = () => {
     new DictionaryEntry("cat", "meme generator"),
     true
   );
-  list.crawl();
+  // list.crawl();
+  list.crawlGen();
   list.insert(new DictionaryEntry("dog", "frisbee finder"), null);
   list.insert(new DictionaryEntry("linked list", "The bees knees"), null);
-  list.crawl();
-  list.findI(1);
+  // list.crawl();
+  // list.findI(1);
   list.insert(new DictionaryEntry("hash table", "magic"), 1);
-  list.crawl();
-  list.reverse();
-  list.crawl();
-  console.log(list.length());
+  // list.crawl();
+  // list.reverse();
+  // list.crawl();
+  // console.log(list.length());
 };
-// testing();
+testing();
 module.exports = LinkedList;
 ////

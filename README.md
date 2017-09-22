@@ -1,5 +1,14 @@
 # assignment_data_structures_node
 
+An exercise in data structures for VCS.
+Implementations of :
+Linked Lists
+Stacks
+Queues
+Hashmaps / Dictionaries
+
+The patternPermutation.js was the beginning of an attempt at at a permutation problem - it's incomplete.
+
 Name: Eric and Greg
 
 
