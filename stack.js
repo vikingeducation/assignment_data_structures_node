@@ -23,6 +23,11 @@ class Stack {
     return popped;
   }
 
+  peek() {
+    let popped = this.stack[this.arrLength];
+    return popped;
+  }
+
 }
 
 let stack = new Stack();
