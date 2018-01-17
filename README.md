@@ -11,3 +11,18 @@
 5. O(n) --> linear time
 6. 0(nlogn) --> because, best sorting algorithm we know(merge sort) takes
    O(nlogn) run-time.
+7. O(n) --> because we need to look at every character in the string, and when 
+   we split we only have to look in the most recent split string, not any of 
+the others.
+8. O(1) --> No order, no traversing, just make a new element at a certain 
+   address in memory.
+9. O(n) --> because obviously
+
+
+
+
+
+
+
+
+
