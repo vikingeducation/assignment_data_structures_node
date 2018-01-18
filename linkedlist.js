@@ -1,30 +1,28 @@
 class HashTable {
 	constructor() {
 		this.buckets = new Array(26);
+    for (var i = 0, len = this.buckets.length; i < len; i++) {
+      this.buckets[i] = new LinkedList();
+    }
 	}
 
 	hashFunction(word) {
 		let alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-		let position = alphabet.indexOf(word[0]);
+		let position = alphabet.indexOf(word.toLowerCase()[0]);
 		return position;
 	}
 
 	insert(word) {
 		let idx = this.hashFunction(word);
-		if (!this.buckets[idx]) {
-			this.buckets[idx] = new LinkedList();
-		}
 		this.buckets[idx].addNode(word);
 	}
 
-
-	renderList(){
-
-	for (var i = 0; i)
-
-
-
-	}
+	renderTable(){
+		let alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+    for (var i = 0, len = this.buckets.length; i < len; i++) {
+      console.log(alphabet[i] + " " + this.buckets[i].renderList());
+    }
+  }
 }
 
 class Node {
@@ -137,6 +135,21 @@ class LinkedList {
 		console.log(currentNode);
 	}
 
+  renderList() {
+    let returnString = "";
+   	let currentNode = this.headNode;
+
+    if (!currentNode) return returnString;
+
+		while (currentNode.next) {
+      returnString += `| ${currentNode.data} `;
+		  currentNode = currentNode.next;
+		}
+		returnString += `| ${currentNode.data} | `;
+    return returnString;
+  }
+
+
 	reverseList() {
 		let current = this.headNode;
 		let next = current.next;
@@ -168,3 +181,14 @@ list.addNode(5);
 
 list.reverseList();
 list.printList();
+list.renderList();
+
+// TEST HASH TABLE
+
+let hashTable = new HashTable();
+hashTable.insert("apple");
+hashTable.insert("atom");
+hashTable.insert("mountain");
+hashTable.insert("jack");
+hashTable.insert("box");
+hashTable.renderTable();
