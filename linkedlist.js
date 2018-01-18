@@ -1,3 +1,32 @@
+class HashTable {
+	constructor() {
+		this.buckets = new Array(26);
+	}
+
+	hashFunction(word) {
+		let alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+		let position = alphabet.indexOf(word[0]);
+		return position;
+	}
+
+	insert(word) {
+		let idx = this.hashFunction(word);
+		if (!this.buckets[idx]) {
+			this.buckets[idx] = new LinkedList();
+		}
+		this.buckets[idx].addNode(word);
+	}
+
+
+	renderList(){
+
+	for (var i = 0; i)
+
+
+
+	}
+}
+
 class Node {
 	constructor(data, next) {
 		this.data = data;
@@ -75,10 +104,11 @@ class LinkedList {
 		let currentNode = this.headNode;
 
 		// Crawl until we hit index
-		while (counter < index-1) {
+		while (counter < index - 1) {
 			currentNode = currentNode.next;
 			++counter;
-			console.log(currentNode);
+
+			//console.log(currentNode);
 		}
 
 		return currentNode;
@@ -89,59 +119,52 @@ class LinkedList {
 		let newNode = new Node(data, null);
 
 		let prevNode = this.findNode(index);
-		let nextNode = prevNode.next; 
+		let nextNode = prevNode.next;
 
 		newNode.next = nextNode;
 		prevNode.next = newNode;
 	}
-	//O(n) traversal 
+	//O(n) traversal
 	// Crawls and prints the list
 	printList() {
 		// Start at the head
 		let currentNode = this.headNode;
 
-		while (currentNode.next !== null) {
-			console.log(currentNode.data);
+		while (currentNode.next) {
+			console.log(currentNode);
 			currentNode = currentNode.next;
 		}
-    console.log(currentNode.data);
+		console.log(currentNode);
 	}
 
-  reverseList() {
-
-
-
-  }
-  
+	reverseList() {
+		let current = this.headNode;
+		let next = current.next;
+		let prev;
+		while (current.next) {
+			prev = current;
+			current = next;
+			next = current.next;
+			if (!next) break;
+			current.next = prev;
+		}
+		current.next = prev;
+		this.headNode.next = null;
+		let oldHead = this.headNode;
+		this.headNode = this.lastNode;
+		this.lastNode = oldHead;
+	}
 }
 
 // TEST
 
 let list = new LinkedList();
 list.addFirstNode(1);
+
 list.addNode(2);
 list.addNode(3);
 list.addNode(4);
 list.addNode(5);
-console.log("------- first find --------");
-list.findNode(1);
-list.findNode(2);
-list.findNode(3);
-list.findNode(4);
-list.findNode(5);
-console.log("------- first find --------");
 
-console.log("list.findNode(4): ", list.findNode(4));
-console.log("list.findNode(1): ", list.findNode(1));
-list.insertNode(4, 4.5);
-list.printList();
 list.reverseList();
-console.log("------------------");
-list.findNode(1);
-list.findNode(2);
-list.findNode(3);
-list.findNode(4);
-list.findNode(5);
-console.log("------------------");
-
 list.printList();
