@@ -12,9 +12,9 @@ class HashTable {
 		return position;
 	}
 
-	insert(word) {
+	insert(word, definition) {
 		let idx = this.hashFunction(word);
-		this.buckets[idx].addNode(word);
+		this.buckets[idx].addNode({word, definition});
 	}
 
 	renderTable(){
@@ -22,6 +22,22 @@ class HashTable {
     for (var i = 0, len = this.buckets.length; i < len; i++) {
       console.log(alphabet[i] + " " + this.buckets[i].renderList());
     }
+  }
+
+  define(word) {
+    let idx = this.hashFunction(word);
+    let list = this.buckets[idx];
+    let currentNode = list.headNode;
+    let steps = 0;
+    while (currentNode) {
+      steps += 1;
+      if (currentNode.data.word === word) {
+        break;
+      }
+      currentNode = currentNode.next;
+    }
+    if (currentNode && currentNode.data.word === word) return `${currentNode.data.definition} count: ${steps}`
+    return `not found count: ${steps}`;
   }
 }
 
@@ -142,10 +158,10 @@ class LinkedList {
     if (!currentNode) return returnString;
 
 		while (currentNode.next) {
-      returnString += `| ${currentNode.data} `;
+      returnString += `| ${JSON.stringify(currentNode.data)} `;
 		  currentNode = currentNode.next;
 		}
-		returnString += `| ${currentNode.data} | `;
+		returnString += `| ${JSON.stringify(currentNode.data)} | `;
     return returnString;
   }
 
@@ -192,3 +208,13 @@ hashTable.insert("mountain");
 hashTable.insert("jack");
 hashTable.insert("box");
 hashTable.renderTable();
+console.log(
+  hashTable.define("atom")
+)
+console.log(
+  hashTable.define("dog")
+)
+
+console.log(
+  hashTable.define("at")
+)
