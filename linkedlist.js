@@ -1,9 +1,13 @@
+
+
+
+
 class HashTable {
 	constructor() {
 		this.buckets = new Array(26);
-    for (var i = 0, len = this.buckets.length; i < len; i++) {
-      this.buckets[i] = new LinkedList();
-    }
+		for (var i = 0, len = this.buckets.length; i < len; i++) {
+			this.buckets[i] = new LinkedList();
+		}
 	}
 
 	hashFunction(word) {
@@ -14,31 +18,32 @@ class HashTable {
 
 	insert(word, definition) {
 		let idx = this.hashFunction(word);
-		this.buckets[idx].addNode({word, definition});
+		this.buckets[idx].addNode({ word, definition });
 	}
 
-	renderTable(){
+	renderTable() {
 		let alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-    for (var i = 0, len = this.buckets.length; i < len; i++) {
-      console.log(alphabet[i] + " " + this.buckets[i].renderList());
-    }
-  }
+		for (var i = 0, len = this.buckets.length; i < len; i++) {
+			console.log(alphabet[i] + " " + this.buckets[i].renderList());
+		}
+	}
 
-  define(word) {
-    let idx = this.hashFunction(word);
-    let list = this.buckets[idx];
-    let currentNode = list.headNode;
-    let steps = 0;
-    while (currentNode) {
-      steps += 1;
-      if (currentNode.data.word === word) {
-        break;
-      }
-      currentNode = currentNode.next;
-    }
-    if (currentNode && currentNode.data.word === word) return `${currentNode.data.definition} count: ${steps}`
-    return `not found count: ${steps}`;
-  }
+	define(word) {
+		let idx = this.hashFunction(word);
+		let list = this.buckets[idx];
+		let currentNode = list.headNode;
+		let steps = 0;
+		while (currentNode) {
+			steps += 1;
+			if (currentNode.data.word === word) {
+				break;
+			}
+			currentNode = currentNode.next;
+		}
+		if (currentNode && currentNode.data.word === word)
+			return `${currentNode.data.definition} count: ${steps}`;
+		return `not found count: ${steps}`;
+	}
 }
 
 class Node {
@@ -151,20 +156,19 @@ class LinkedList {
 		console.log(currentNode);
 	}
 
-  renderList() {
-    let returnString = "";
-   	let currentNode = this.headNode;
+	renderList() {
+		let returnString = "";
+		let currentNode = this.headNode;
 
-    if (!currentNode) return returnString;
+		if (!currentNode) return returnString;
 
 		while (currentNode.next) {
-      returnString += `| ${JSON.stringify(currentNode.data)} `;
-		  currentNode = currentNode.next;
+			returnString += `| ${JSON.stringify(currentNode.data)} `;
+			currentNode = currentNode.next;
 		}
 		returnString += `| ${JSON.stringify(currentNode.data)} | `;
-    return returnString;
-  }
-
+		return returnString;
+	}
 
 	reverseList() {
 		let current = this.headNode;
@@ -185,6 +189,10 @@ class LinkedList {
 	}
 }
 
+
+
+
+
 // TEST
 
 let list = new LinkedList();
@@ -201,20 +209,24 @@ list.renderList();
 
 // TEST HASH TABLE
 
+let dictionary = require('./dictionary.json')
 let hashTable = new HashTable();
-hashTable.insert("apple");
+for (entry in dictionary){
+	hashTable.insert(entry, dictionary[entry])
+    
+}
+
+hashTable.renderTable();
+console.log(hashTable.define("atom"))
+console.log(hashTable.define("abjure"))
+
+/*hashTable.insert("apple");
 hashTable.insert("atom");
 hashTable.insert("mountain");
 hashTable.insert("jack");
 hashTable.insert("box");
-hashTable.renderTable();
-console.log(
-  hashTable.define("atom")
-)
-console.log(
-  hashTable.define("dog")
-)
 
-console.log(
-  hashTable.define("at")
-)
+console.log(hashTable.define("atom"));
+console.log(hashTable.define("dog"));
+
+console.log(hashTable.define("at"));*/
