@@ -75,7 +75,7 @@ class LinkedList {
 		let currentNode = this.headNode;
 
 		// Crawl until we hit index
-		while (counter < index) {
+		while (counter < index-1) {
 			currentNode = currentNode.next;
 			++counter;
 			console.log(currentNode);
@@ -88,8 +88,8 @@ class LinkedList {
 	insertNode(index, data) {
 		let newNode = new Node(data, null);
 
-		let prevNode = findNode(index);
-		let nextNode = findNode(index + 1);
+		let prevNode = this.findNode(index);
+		let nextNode = prevNode.next; 
 
 		newNode.next = nextNode;
 		prevNode.next = newNode;
@@ -104,5 +104,44 @@ class LinkedList {
 			console.log(currentNode.data);
 			currentNode = currentNode.next;
 		}
+    console.log(currentNode.data);
 	}
+
+  reverseList() {
+
+
+
+  }
+  
 }
+
+// TEST
+
+let list = new LinkedList();
+list.addFirstNode(1);
+list.addNode(2);
+list.addNode(3);
+list.addNode(4);
+list.addNode(5);
+console.log("------- first find --------");
+list.findNode(1);
+list.findNode(2);
+list.findNode(3);
+list.findNode(4);
+list.findNode(5);
+console.log("------- first find --------");
+
+console.log("list.findNode(4): ", list.findNode(4));
+console.log("list.findNode(1): ", list.findNode(1));
+list.insertNode(4, 4.5);
+list.printList();
+list.reverseList();
+console.log("------------------");
+list.findNode(1);
+list.findNode(2);
+list.findNode(3);
+list.findNode(4);
+list.findNode(5);
+console.log("------------------");
+
+list.printList();
