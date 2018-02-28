@@ -1,0 +1,70 @@
+class Stack {
+  constructor(){
+    this.values = []
+  }
+
+  push(val){
+    // append an item to the end and return the new array
+    this.values[this.values.length] = val
+    console.log(this.values);
+    return this.values
+  }
+
+  pop(){
+    // remove last item from end and return it
+    let lastIndex = this.values.length - 1
+    let poppedItem = this.values[lastIndex]
+    this.values[lastIndex] = null
+    console.log(poppedItem);
+    return poppedItem
+  }
+
+  peek(){
+    // return value of last item
+    let lastIndex = this.values.length - 1
+    console.log(this.values[lastIndex]);
+    return this.values[lastIndex]
+  }
+
+  join(inputArr){
+    let output = ''
+    let counter = inputArr.length
+    let index = 0
+
+    while(counter > 0){
+      output += inputArr[index]
+      counter -= 1
+      index += 1
+    }
+    console.log(output);
+    return output
+  }
+
+  empty(){
+    return this.values.length === 0
+  }
+
+  reverse(input){
+    let output = ''
+    let counter = input.length
+    let lastChar
+    while (counter > 0){
+      lastChar = input[counter -1]
+      output += lastChar
+      counter -= 1
+    }
+    console.log(output);
+    return output
+  }
+}
+
+stack = new Stack()
+stack.push('c')
+stack.push('a')
+let myArr = stack.push('t')
+let myStr = stack.join(myArr)
+stack.reverse(myStr)
+
+stack.push('z')
+stack.peek()
+stack.pop()
