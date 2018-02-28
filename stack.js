@@ -63,12 +63,12 @@ class Stack {
 }
 
 stack = new Stack()
-stack.push('c')
-stack.push('a')
-let myArr = stack.push('t')
-let myStr = stack.join(myArr)
-stack.reverse(myStr)
+stack.push('c') // ['c']
+stack.push('a') // ['c', 'a']
+let myArr = stack.push('t') // ['c', 'a', 't']
+let myStr = stack.join(myArr) // 'cat'
+stack.reverse(myStr) // 'tac'
 
-stack.push('z')
-stack.peek()
-stack.pop()
+stack.push('z') // ['c', 'a', 't', 'z']
+stack.peek() // 'z'
+stack.pop() // 'z'
