@@ -1,3 +1,7 @@
+// Create a Stack class which implements methods to push, pop, and peek at the top item.
+// Add an empty helper.
+// Verify that you can reverse a string with your stack:
+
 class Stack {
   constructor(){
     this.values = []
